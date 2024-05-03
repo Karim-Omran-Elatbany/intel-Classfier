@@ -167,29 +167,6 @@ class_texts = {
     Despite being weathered by time and erosion, the Sphinx remains one of Egypt's most iconic and enduring symbols, attracting millions of visitors from around the world who come to marvel at its monumental presence and learn about its rich history and significance in ancient Egyptian civilization.
     """
                    }
-class_Location = {
-    'Akhenaten': "https://maps.app.goo.gl/CQ1yY1d9a22LxjKW8",
-    'Bent pyramid for senefru': 'https://maps.app.goo.gl/F9iKKWojxRQWKjmx7',
-    'Colossal Statue of Ramesses II': 'https://maps.app.goo.gl/9XGHMtPu1jkFbTRL8', 
-    'Colossoi of Memnon': 'https://maps.app.goo.gl/Ts5WCBrY8ptAsdra7',
-    'Goddess Isis with her child': 'No Location',
-    'Hatshepsut': 'https://maps.app.goo.gl/gBYFY1134PCskwvz5',
-    'Khafre Pyramid': 'https://maps.app.goo.gl/mkZTgLBCSaJJoBqt9',
-    'King Thutmose III': 'https://maps.app.goo.gl/njb73LNxDUUBQgWv5',
-    'Mask of Tutankhamun': 'https://maps.app.goo.gl/8qUrwuAEHSytts1g6', 
-    'Nefertiti': 'https://maps.app.goo.gl/LMhwYxzsKzJm7iNn7', 
-    'Pyramid_of_Djoser': 'https://maps.app.goo.gl/32hYwCzepozsQLKG7', 
-    'Ramessum': 'https://maps.app.goo.gl/dbJP5oP1snm8uSEk8',
-    'Statue of King Zoser': 'https://maps.app.goo.gl/7c331DE1ozzM3HdBA', 
-    'Statue of Tutankhamun with Ankhesenamun': 'https://maps.app.goo.gl/8qUrwuAEHSytts1g6',
-    'Temple_of_Isis_in_Philae': 'https://maps.app.goo.gl/GDNr5ENYmwQ75tRc7', 
-    'Temple_of_Kom_Ombo': 'https://maps.app.goo.gl/Yjjck1zVeTvrhNJ67', 
-    'The Great Temple of Ramesses II': 'Thttps://maps.app.goo.gl/N7tN4QtrcVe2hez19',
-    'amenhotep iii and tiye': 'https://maps.app.goo.gl/PnSoqxLH1eQiQTdu6',
-    'bust of ramesses ii': 'https://maps.app.goo.gl/78p5MCx6LbqGbEAX6',
-    'head Statue of Amenhotep iii': 'https://maps.app.goo.gl/PnSoqxLH1eQiQTdu6', 
-    'menkaure pyramid': 'https://maps.app.goo.gl/nurHiRxuXknGoVrJ8',
-    'sphinx': 'https://maps.app.goo.gl/aeFcmD8FARFR4HEs9'}
 model=load_model("mobilenet_model.h5")
 
 @app.route('/')
@@ -211,11 +188,9 @@ def api():
         ind = np.argmax(result)
         prediction_class = classes[ind]
         prediction_text = class_texts[prediction_class]  # Get the text for the predicted class
-        prediction_Location = class_Location[prediction_class]
         print(prediction_class)
         print(prediction_text)
-        print(prediction_Location)
-        return jsonify({'prediction': prediction_class, 'prediction_text': prediction_text ,'prediction_Location':prediction_Location})
+        return jsonify({'prediction': prediction_class, 'prediction_text': prediction_text})
     except:
         return jsonify({'Error': 'Error occur'})
 
@@ -235,11 +210,11 @@ def predict():
         ind = np.argmax(result)
         prediction_class = classes[ind]
         prediction_text = class_texts[prediction_class]  # Get the text for the predicted class
-        prediction_Location = class_Location[prediction_class]
+
         print(prediction_class)
         print(prediction_text)
-        print(prediction_Location)
-        return render_template('index.html', prediction=prediction_class, prediction_text=prediction_text,prediction_Location=prediction_Location, image='static/IMG/', appName="Intel Image Classification")
+
+        return render_template('index.html', prediction=prediction_class, prediction_text=prediction_text, image='static/IMG/', appName="Intel Image Classification")
     else:
         return render_template('index.html',appName="Intel Image Classification")
 
